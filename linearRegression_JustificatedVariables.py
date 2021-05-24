@@ -12,7 +12,7 @@ from scipy.stats import sem
 
 # Dataset variables
 features=["danceability","energy","loudness","speechiness","acousticness","instrumentalness","liveness","valence"]
-dataset = pd.read_csv('./archive/tracks.csv', usecols=["popularity","danceability","energy","loudness","speechiness","acousticness","instrumentalness","liveness","valence"])
+dataset = pd.read_csv('./tracks.csv', usecols=["popularity","danceability","energy","loudness","speechiness","acousticness","instrumentalness","liveness","valence"])
 
 dataset.replace([',,', 0], np.nan, inplace=True)
 dataset.replace(['', 0], np.nan, inplace=True)
@@ -25,7 +25,7 @@ df_x= dataset.loc[:,dataset.columns!='popularity']
 df_y = dataset["popularity"]
 
 # size for the test
-sizeTest = math.floor(df_y.size * 0.25)
+sizeTest = math.floor(df_y.size * 0.35)
 
 # Split the data into training/testing sets
 #X
@@ -56,6 +56,14 @@ for i in range(10):
 print("10 Last values Predicted Vs Expected")
 for i in range(len(y_pred)-10, len(y_pred), 1):
   print("Predicted: ", y_pred[i], " Expected: ", df_y.values[i])
+
+
+# Plot outputs
+plt.plot(df_y.values)
+plt.plot(y_pred)
+plt.ylabel('Expected VS Predicted')
+plt.show()
+
 
 print("\nPredict the popularity of a song, get the token from the Spotify Console")
 
